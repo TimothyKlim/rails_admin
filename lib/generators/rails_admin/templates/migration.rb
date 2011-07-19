@@ -1,18 +1,25 @@
-class CreateHistoriesTable < ActiveRecord::Migration
-   def self.up
-     create_table :histories do |t|
-       t.string :message # title, name, or object_id
-       t.string :username
-       t.integer :item
-       t.string :table
-       t.integer :month, :limit => 2
-       t.integer :year, :limit => 5
-       t.timestamps
+migration 1, :rails_admin_install do
+  up do
+     create_table :rails_admin_histories do
+       column :id, Serial
+       column :message, String
+       column :username, String
+       column :table, String
+
+       column :item, Integer
+       column :month, Integer
+       column :year, Integer
+
+       column :created_at, DateTime
+       column :created_on, Date
+       column :updated_at, DateTime
+       column :updated_on, Date
     end
-    add_index(:histories, [:item, :table, :month, :year])
+
+    create_index :rails_admin_histories, :item, :table, :month, :year
   end
 
-  def self.down
-    drop_table :histories
+  down do
+    drop_table :rails_admin_histories
   end
 end
